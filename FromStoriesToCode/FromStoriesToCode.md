@@ -46,9 +46,11 @@ We ran a Domain Storytelling workshop for CookWithUs and produced the following 
 
 > *An Anonymous user registers via the App and becomes a Cook. A Cook prepares a Meal and shares a Recipe, optionally with pictures. A different Cook tries that Recipe, also optionally taking pictures, and rates it.*
 
-
+![CookWithUs Domain Story](./images/CookWithUsDomainStory.jpg)
 
 The pictographic story captures six numbered activities across two Cook actors, making the role distinction between author and rater visually explicit. Alongside it, we built a first Visual Glossary that identified three bounded contexts — **Register**, **Sharing**, and **Rating** — and detailed the structure of key concepts: Cook (with email), Recipe (with Ingredients, Making, and Steps), and Rating (with Stars and optional Picture).
+
+![CookWithUs Visual Glossary](./images/CookWithUsVisualGlossary1.jpg)
 
 The glossary also made one inheritance relationship visible: **RatedRecipe inherits from Recipe**.
 
@@ -56,8 +58,6 @@ The glossary also made one inheritance relationship visible: **RatedRecipe inher
 
 Rather than transcribing the artifacts into text, we attached both images directly to the LLM:
 
-> *[Domain Story image] [Visual Glossary image]*
->
 > *Based on these two modeling artifacts for a platform called CookWithUs, generate a runnable REST API using Node.js and Express with in-memory storage. No authentication required beyond identifying the current Cook by ID. Do not add any features or concepts not visible in the artifacts.*
 
 The instruction to not add anything not visible in the artifacts is deliberate. It keeps the LLM honest and makes gaps visible — which is exactly what we want for this experiment.
@@ -88,6 +88,7 @@ Rating:
       items:
         $ref: '#/components/schemas/Picture'
 ```
+(The entire OpenAPI can be found in GitHub)
 
 Clean, correct, and directly traceable to the Visual Glossary.
 
