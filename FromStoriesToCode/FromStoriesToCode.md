@@ -88,7 +88,8 @@ Rating:
       items:
         $ref: '#/components/schemas/Picture'
 ```
-(The entire OpenAPI can be found in GitHub)
+(The OpenAPI can be found in [OpenAPI](openapiDomainStoryTelling).
+The project can be found in [Service After Domain Storytelling]())
 
 Clean, correct, and directly traceable to the Visual Glossary.
 
