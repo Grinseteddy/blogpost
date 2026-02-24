@@ -12,7 +12,7 @@ LLMs don't fail at domain work because they're not smart. They fail because they
 
 The missing ingredient isn't a better model or a cleverer prompt. It's a better specification. And that's where collaborative modeling comes in.
 
-This post shows how Domain Storytelling and EventStorming — techniques most of you already know — produce artifacts that are not just useful for human communication but directly usable as LLM context. The result is a prototype pipeline where each modeling step reduces ambiguity and produces measurably better generated output. We'll demonstrate this concretely using **CookWithUs**, a recipe-sharing platform we built from scratch across three prototype iterations.
+This post shows how Domain Storytelling [1] and EventStorming [2] — techniques most of you already know — produce artifacts that are not just useful for human communication but directly usable as LLM context. The result is a prototype pipeline where each modeling step reduces ambiguity and produces measurably better generated output. We'll demonstrate this concretely using **CookWithUs**, a recipe-sharing platform we built from scratch across three prototype iterations.
 
 ---
 
@@ -20,19 +20,21 @@ This post shows how Domain Storytelling and EventStorming — techniques most of
 
 An LLM prompt is only as good as the context it contains. This is not a controversial claim — it's the fundamental constraint of how these models work. Feed them vague input, get vague output. Feed them precise, structured, domain-grounded input, get precise, structured, domain-grounded output.
 
+> **&#9432; NOTE**: Ambiguity is the enemy since the first software was written. It is not a new problem. Eric Evans already tackled the problem in his groundbreaking work "Domain-Driven Design" in 2003 [3].
+
 The challenge is that most developers approach LLM-assisted prototyping the way they'd approach a Google search: a short description of what they want, with the model expected to fill in the rest. The model obliges — and fills in the rest with generic assumptions derived from the thousands of similar systems it has seen during training.
 
-Collaborative modeling techniques solve a different problem for human teams: they surface tacit knowledge, resolve ambiguity, and build shared understanding. But as a side effect, they produce artifacts — domain stories, event boards, visual glossaries — that are remarkably well-structured as LLM input. The pictographic language of Domain Storytelling maps cleanly to actors and work objects. The event/command/policy structure of EventStorming maps directly to API operations and business rules. An OpenAPI spec derived from those artifacts is, essentially, a machine-readable domain model.
+Collaborative modeling techniques solve a different problem for human teams: they surface tacit knowledge, resolve ambiguity, and build shared understanding. But as a side effect, they produce artifacts — Domain Stories [1], Event Boards [2], Visual Glossaries [4] — that are remarkably well-structured as LLM input. The pictographic language of Domain Storytelling maps cleanly to actors and work objects. The command/event/policy structure of EventStorming [2] maps directly to API operations and business rules. An OpenAPI spec [5] derived from those artifacts is, essentially, a machine-readable domain model.
 
-The thread connecting all three is the **Ubiquitous Language** — the shared vocabulary that emerges from collaborative modeling sessions and grows more precise with each step. In the context of LLM-assisted development, the quality of that language directly determines the quality of the generated output.
+The thread connecting all three is the **Ubiquitous Language** [3] — the shared vocabulary that emerges from collaborative modeling sessions and grows more precise with each step. In the context of LLM-assisted development, the quality of that language directly determines the quality of the generated output.
 
 The pipeline we'll demonstrate has three steps:
 
 - **Domain Storytelling** — captures intent and produces a first vocabulary
 - **EventStorming** — sharpens that vocabulary into events, commands, and policies
-- **API Spec** — encodes the result as a machine-readable contract
+- **OpenAPI Spec** — encodes the result as a machine-readable contract
 
-At each step, we feed the artifacts directly to an LLM and generate a prototype. The progression is the argument.
+At each step, we feed the artifacts directly to an LLM and generate a prototype. Let's see what happens.
 
 ---
 
@@ -43,6 +45,8 @@ At each step, we feed the artifacts directly to an LLM and generate a prototype.
 We ran a Domain Storytelling workshop for CookWithUs and produced the following story:
 
 > *An Anonymous user registers via the App and becomes a Cook. A Cook prepares a Meal and shares a Recipe, optionally with pictures. A different Cook tries that Recipe, also optionally taking pictures, and rates it.*
+
+
 
 The pictographic story captures six numbered activities across two Cook actors, making the role distinction between author and rater visually explicit. Alongside it, we built a first Visual Glossary that identified three bounded contexts — **Register**, **Sharing**, and **Rating** — and detailed the structure of key concepts: Cook (with email), Recipe (with Ingredients, Making, and Steps), and Rating (with Stars and optional Picture).
 
@@ -270,3 +274,11 @@ The question worth asking is not "how do we use AI to go faster?" It is "how do 
 *All artifacts, prompts, OpenAPI specs, and generated code from this post are available at [GitHub link].*
 
 *The CookWithUs example was modeled using [Miro](https://miro.com) and [Egon.io](https://egon.io). Prototypes were generated using [Claude Code](https://claude.ai/code).*
+
+## References
+
+[1] Hofer, S.; Schwentner, H.: Domain Storytelling - A Collaborative, Visual, and Agile Way to Build Domain-Driven Software, Addison-Wesley Professional, 2021
+[2] Brandolini, A.: EventStorming, 2026, accessed February 24th, 2026, [https://www.eventstorming.com/](https://www.eventstorming.com/)
+[3] Evans, E.: Domain-Driven Design - Tackling Complexity in the Heart of Software, Pearson International, 2003
+[4] Zörner, S.: Software-Architekturen dokumentieren und kommunizieren: Entwürfe, Entscheidungen und Lösungen nachvollziehbar und wirkungsvoll festhalten (in German), Hanser Fachbuchverlag, 2015 
+[5] OpenAPI Initiative: OpenAPI Specification 3.1.0, February 15th, 2021, accessed February 24th, 2026, [https://spec.openapis.org/oas/v3.1.0.html](https://spec.openapis.org/oas/v3.1.0.html)
