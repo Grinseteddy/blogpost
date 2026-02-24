@@ -58,6 +58,8 @@ The glossary also made one inheritance relationship visible: **RatedRecipe inher
 
 Rather than transcribing the artifacts into text, we attached both images directly to the LLM:
 
+> *[Domain Story image] [Visual Glossary image]*
+> 
 > *Based on these two modeling artifacts for a platform called CookWithUs, generate a runnable REST API using Node.js and Express with in-memory storage. No authentication required beyond identifying the current Cook by ID. Do not add any features or concepts not visible in the artifacts.*
 
 The instruction to not add anything not visible in the artifacts is deliberate. It keeps the LLM honest and makes gaps visible — which is exactly what we want for this experiment.
@@ -88,8 +90,8 @@ Rating:
       items:
         $ref: '#/components/schemas/Picture'
 ```
-(The OpenAPI can be found in [OpenAPI](openapiDomainStoryTelling).
-The project can be found in [Service After Domain Storytelling]())
+- [OpenAPI](https://github.com/Grinseteddy/blogpost/blob/main/FromStoriesToCode/samples/openapiDomainStoryTelling.yaml)
+- [Service After Domain Storytelling](https://github.com/Grinseteddy/blogpost/tree/main/FromStoriesToCode/samples/VersionAfterDomainStorytelling)
 
 Clean, correct, and directly traceable to the Visual Glossary.
 
@@ -98,6 +100,8 @@ Clean, correct, and directly traceable to the Visual Glossary.
 Three gaps stand out — and they're precisely where the Domain Story and Visual Glossary were ambiguous:
 
 **The self-rating rule is completely absent.** The business rule "a Cook cannot rate their own Recipe" existed in our conversation but was never visible in any artifact. The generated `ratings.js` has no check for it. This is not an LLM failure — it's an artifact failure. The model had no way to know the rule existed.
+
+> **&#9432; NOTE**: This is a reminder that every decision or rule surfaced in a workshop should be captured immediately. A simple convention: red sticky notes for rules, constraints, and open questions that aren't yet reflected in the model.
 
 **Meal is disconnected.** The Domain Story shows a Cook prepares a Meal and then shares a Recipe, implying a relationship. The LLM modeled them as two separate, unrelated resources. `MealInput` has only pictures and no link to Recipe whatsoever.
 
@@ -111,11 +115,17 @@ These gaps are not edge cases. A Cook gaming their own recipe rankings, a discon
 
 ### The Artifact
 
-We ran an EventStorming session using the Domain Story as a starting point. The board revealed three bounded contexts with clear visual boundaries: **Register**, **Sharing**, and **Rating**. Within those contexts, the following emerged:
+We ran an EventStorming session using the Domain Story as a starting point. The board revealed three bounded contexts with clear visual boundaries: **Register**, **Sharing**, and **Rating**. 
+
+![EventStorming](./images/CookWithUsEventStorming.jpg)
+
+Within those contexts, the following emerged:
 
 In the **Sharing** context: the command `ShareRecipe` produces the event `RecipeShared`. The command `TakePictures` produces `PicturesTaken`. A constraint appeared: *Recipe needs a unique title*.
 
 In the **Rating** context: the command `RateRecipe` produces `RecipeRated`. A policy appeared explicitly: *Own recipes cannot be rated*. `MealCooked` and `RecipeTried` were deliberately marked "Not in the app" — a scoping decision that prevents the LLM from generating dead code.
+
+![Refined Visual Glossary](./images/CookWithUsVisualGlossary2.jpg)
 
 The refined Visual Glossary added significantly to what the Domain Story had captured:
 

@@ -1,0 +1,473 @@
+openapi: 3.1.0
+info:
+  title: CookWithUs API
+  version: 2.0.0
+  description: >
+    Platform where Cooks share and rate recipes.
+    The acting Cook is identified via the X-Cook-Id request header.
+
+servers:
+  - url: /api/v2
+
+# ---------------------------------------------------------------------------
+# Security / actor identification
+# ---------------------------------------------------------------------------
+components:
+  parameters:
+    XCookId:
+      name: X-Cook-Id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: ID of the Cook performing the action.
+
+  # -------------------------------------------------------------------------
+  # Schemas
+  # -------------------------------------------------------------------------
+  schemas:
+
+    # -- Cook ----------------------------------------------------------------
+    CookCreate:
+      type: object
+      required: [name, givenName, email]
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        givenName:
+          type: string
+        email:
+          type: string
+          format: email
+
+    Cook:
+      type: object
+      required: [id, name, givenName, email]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        givenName:
+          type: string
+        email:
+          type: string
+          format: email
+
+    # -- Recipe sub-types ----------------------------------------------------
+    Ingredient:
+      type: object
+      required: [name, number, unit]
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        number:
+          type: string
+          description: Quantity as a free-form string (e.g. "3/4", "1.5").
+        unit:
+          type: string
+
+    Step:
+      type: object
+      required: [orderNo, title, description]
+      additionalProperties: false
+      properties:
+        orderNo:
+          type: integer
+          minimum: 1
+        title:
+          type: string
+        description:
+          type: string
+
+    ShoppingItem:
+      type: object
+      required: [product, number]
+      additionalProperties: false
+      properties:
+        product:
+          type: string
+        number:
+          type: integer
+          minimum: 1
+        link:
+          type: string
+
+    Meal:
+      type: string
+      enum: [Breakfast, Lunch, Dinner, Dessert]
+
+    Diet:
+      type: string
+      enum: [Normal, Vegetarian, Vegan]
+
+    # -- Recipe --------------------------------------------------------------
+    RecipeCreate:
+      type: object
+      required: [title, ingredients, howTo, servings, meal, diet]
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+        ingredients:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Ingredient'
+        howTo:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Step'
+        shoppingList:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShoppingItem'
+        servings:
+          type: integer
+          minimum: 1
+        meal:
+          $ref: '#/components/schemas/Meal'
+        diet:
+          $ref: '#/components/schemas/Diet'
+        picture:
+          type: string
+          description: Base64-encoded image. Optional.
+
+    Recipe:
+      type: object
+      required: [id, ownerId, title, ingredients, howTo, servings, meal, diet]
+      properties:
+        id:
+          type: string
+        ownerId:
+          type: string
+        title:
+          type: string
+        ingredients:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Ingredient'
+        howTo:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Step'
+        shoppingList:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShoppingItem'
+        servings:
+          type: integer
+          minimum: 1
+        meal:
+          $ref: '#/components/schemas/Meal'
+        diet:
+          $ref: '#/components/schemas/Diet'
+        picture:
+          type: string
+          description: Base64-encoded image. Optional.
+
+    # -- Rating --------------------------------------------------------------
+    RatingCreate:
+      type: object
+      required: [stars]
+      additionalProperties: false
+      properties:
+        stars:
+          type: integer
+          minimum: 1
+          maximum: 5
+        picture:
+          type: string
+          description: Base64-encoded image. Optional.
+        note:
+          type: string
+          maxLength: 1024
+
+    Rating:
+      type: object
+      required: [id, raterId, recipeId, stars]
+      properties:
+        id:
+          type: string
+        raterId:
+          type: string
+        recipeId:
+          type: string
+        stars:
+          type: integer
+          minimum: 1
+          maximum: 5
+        picture:
+          type: string
+          description: Base64-encoded image. Optional.
+        note:
+          type: string
+          maxLength: 1024
+
+    # -- Errors --------------------------------------------------------------
+    Error:
+      type: object
+      required: [message]
+      properties:
+        message:
+          type: string
+
+# ---------------------------------------------------------------------------
+# Paths
+# ---------------------------------------------------------------------------
+paths:
+
+  # ==========================================================================
+  # Cooks  (Register bounded context)
+  # ==========================================================================
+  /cooks:
+    post:
+      operationId: registerCook
+      summary: Register a new Cook
+      tags: [Cooks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CookCreate'
+      responses:
+        '201':
+          description: Cook registered.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cook'
+        '400':
+          description: Validation error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      operationId: listCooks
+      summary: List all Cooks
+      tags: [Cooks]
+      responses:
+        '200':
+          description: List of Cooks.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cook'
+
+  /cooks/{cookId}:
+    parameters:
+      - name: cookId
+        in: path
+        required: true
+        schema:
+          type: string
+
+    get:
+      operationId: getCook
+      summary: Get a Cook by ID
+      tags: [Cooks]
+      responses:
+        '200':
+          description: Cook found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cook'
+        '404':
+          description: Cook not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ==========================================================================
+  # Recipes  (Sharing bounded context)
+  # ==========================================================================
+  /recipes:
+    post:
+      operationId: shareRecipe
+      summary: Share (create) a new Recipe
+      tags: [Recipes]
+      parameters:
+        - $ref: '#/components/parameters/XCookId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeCreate'
+      responses:
+        '201':
+          description: Recipe shared.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+        '400':
+          description: Validation error or duplicate title.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Missing or unknown X-Cook-Id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      operationId: listRecipes
+      summary: List all Recipes
+      tags: [Recipes]
+      responses:
+        '200':
+          description: List of Recipes.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recipe'
+
+  /recipes/{recipeId}:
+    parameters:
+      - name: recipeId
+        in: path
+        required: true
+        schema:
+          type: string
+
+    get:
+      operationId: getRecipe
+      summary: Get a Recipe by ID
+      tags: [Recipes]
+      responses:
+        '200':
+          description: Recipe found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+        '404':
+          description: Recipe not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ==========================================================================
+  # Ratings  (Rating bounded context)
+  # ==========================================================================
+  /recipes/{recipeId}/ratings:
+    parameters:
+      - name: recipeId
+        in: path
+        required: true
+        schema:
+          type: string
+
+    post:
+      operationId: rateRecipe
+      summary: Rate a Recipe
+      tags: [Ratings]
+      parameters:
+        - $ref: '#/components/parameters/XCookId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RatingCreate'
+      responses:
+        '201':
+          description: Rating created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rating'
+        '400':
+          description: Validation error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Missing or unknown X-Cook-Id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Cook cannot rate their own Recipe.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Recipe not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      operationId: listRatings
+      summary: List all Ratings for a Recipe
+      tags: [Ratings]
+      responses:
+        '200':
+          description: List of Ratings.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rating'
+        '404':
+          description: Recipe not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /recipes/{recipeId}/ratings/{ratingId}:
+    parameters:
+      - name: recipeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: ratingId
+        in: path
+        required: true
+        schema:
+          type: string
+
+    get:
+      operationId: getRating
+      summary: Get a specific Rating
+      tags: [Ratings]
+      responses:
+        '200':
+          description: Rating found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rating'
+        '404':
+          description: Recipe or Rating not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'

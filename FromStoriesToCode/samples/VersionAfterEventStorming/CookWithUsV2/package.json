@@ -1,0 +1,22 @@
+{
+  "name": "cookwithus-v2",
+  "version": "2.0.0",
+  "description": "CookWithUs Prototype v2 – API-first Node.js/Express implementation",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-openapi-validator": "^5.3.7",
+    "uuid": "^9.0.0",
+    "yaml": "^2.3.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
