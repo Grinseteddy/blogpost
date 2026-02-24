@@ -231,7 +231,7 @@ We kept the implementation as a monorepo with three Express routers, each valida
 
 ### The Specs as the Deliverable
 
-In a genuine API-first approach, the spec is the deliverable. The implementation that follows is mechanical. The three YAML files are Prototype v3 — not the Node.js code that implements them.
+In a genuine API-first approach, the spec is the deliverable. The implementation that follows is mechanical. The three YAML files are Prototype v3 — not just the [Node.js code]() that implements them.
 
 This is the most important point of the entire pipeline: by the time you have three clean, domain-aligned OpenAPI specs derived from collaborative modeling artifacts, the hard work is done. What remains is execution, and LLMs are very good at execution when given a precise contract to execute against.
 
