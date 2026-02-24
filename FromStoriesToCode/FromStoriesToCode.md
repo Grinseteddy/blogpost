@@ -206,10 +206,12 @@ RecipeCreate:
     diet:
       $ref: '#/components/schemas/Diet'
 ```
+- [OpenAPI after EventStorming](https://github.com/Grinseteddy/blogpost/blob/main/FromStoriesToCode/samples/openapiEventStorming.yaml)
+- [Server version afer EventStorming](https://github.com/Grinseteddy/blogpost/tree/main/FromStoriesToCode/samples/VersionAfterEventStorming)
 
-`ShoppingList`, `Meal`, `Diet`, `servings`, `title` — none of these existed in v1. They weren't invented by the LLM. They came from the EventStorming board.
+`ShoppingList`, `Meal`, `Diet`, `servings`, `title` — none of these existed in v1. They weren't invented by the LLM. They came from the EventStorming board and the enhanced Visual Glossary.
 
-One more structural change worth noting: `RatedRecipe` disappeared. In v1, the LLM had constructed a hybrid response object combining Recipe and Rating. In v2, with clearer bounded context boundaries on the EventStorming board, Rating and Recipe are properly separate aggregates. The spec became simpler, not more complex, as the domain knowledge grew more precise. This is a pattern worth recognising: more domain clarity often means less accidental complexity in the output.
+One more structural change worth noting: `RatedRecipe` disappeared. In v1, the LLM had constructed a hybrid response object combining Recipe and Rating. In v2, with clearer bounded context boundaries on the EventStorming board, Rating and Recipe are properly separate aggregates. The specification became simpler, not more complex, as the domain knowledge grew more precise. This is a pattern worth recognising: more domain clarity often means less accidental complexity in the output.
 
 ---
 
