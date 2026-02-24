@@ -58,8 +58,6 @@ The glossary also made one inheritance relationship visible: **RatedRecipe inher
 
 Rather than transcribing the artifacts into text, we attached both images directly to the LLM:
 
-> *[Domain Story image] [Visual Glossary image]*
-> 
 > *Based on these two modeling artifacts for a platform called CookWithUs, generate a runnable REST API using Node.js and Express with in-memory storage. No authentication required beyond identifying the current Cook by ID. Do not add any features or concepts not visible in the artifacts.*
 
 The instruction to not add anything not visible in the artifacts is deliberate. It keeps the LLM honest and makes gaps visible — which is exactly what we want for this experiment.
@@ -139,8 +137,6 @@ The refined Visual Glossary added significantly to what the Domain Story had cap
 
 For Prototype v2, we started a fresh Claude Code session — no memory of v1 — and attached both EventStorming images with the following prompt:
 
-> *[EventStorming image] [Refined Visual Glossary image]*
->
 > *You are building Prototype v2 of CookWithUs. Follow a strict API-first approach:*
 > *1. Derive the OpenAPI 3.1 spec from the modeling artifacts above — this is your single source of truth*
 > *2. Generate the Node.js + Express implementation from the spec, validated against it using express-openapi-validator*
@@ -207,7 +203,7 @@ RecipeCreate:
       $ref: '#/components/schemas/Diet'
 ```
 - [OpenAPI after EventStorming](https://github.com/Grinseteddy/blogpost/blob/main/FromStoriesToCode/samples/openapiEventStorming.yaml)
-- [Server version afer EventStorming](https://github.com/Grinseteddy/blogpost/tree/main/FromStoriesToCode/samples/VersionAfterEventStorming)
+- [Server version after EventStorming](https://github.com/Grinseteddy/blogpost/tree/main/FromStoriesToCode/samples/VersionAfterEventStorming)
 
 `ShoppingList`, `Meal`, `Diet`, `servings`, `title` — none of these existed in v1. They weren't invented by the LLM. They came from the EventStorming board and the enhanced Visual Glossary.
 
@@ -231,19 +227,21 @@ We kept the implementation as a monorepo with three Express routers, each valida
 
 ### The Specs as the Deliverable
 
-In a genuine API-first approach, the spec is the deliverable. The implementation that follows is mechanical. The three YAML files are Prototype v3 — not just the [Node.js code]() that implements them.
+In a genuine API-first approach, the spec is the deliverable. The implementation that follows is mechanical. The three YAML files are Prototype v3 — not just the [Node.js code](https://github.com/Grinseteddy/blogpost/tree/main/FromStoriesToCode/samples/SeparationOfConcerns) that implements them.
 
 This is the most important point of the entire pipeline: by the time you have three clean, domain-aligned OpenAPI specs derived from collaborative modeling artifacts, the hard work is done. What remains is execution, and LLMs are very good at execution when given a precise contract to execute against.
 
-To demonstrate, we ran one final prompt attaching all three specs:
+We attached all three specs directly and used the following prompt:
 
-> *[register.yaml] [sharing.yaml] [rating.yaml]*
->
 > *Build a single-page React application for CookWithUs. The three attached OpenAPI specs are your single source of truth. Cover the following user journeys, derived strictly from the specs: register as a Cook, share a Recipe, browse Recipes, rate a Recipe. Do not add any feature, field, or screen not derivable from the specs.*
+
+Again, a fresh session — no memory of v1 or v2.
 
 The result was a running web application. The recipe detail screen showed "Scones" with badges for "Breakfast", "Vegetarian", and "3 servings" — the `Meal` enum, `Diet` enum, and `servings` field that didn't exist in Prototype v1, discovered during EventStorming, encoded in the spec, and rendered faithfully by the LLM without any additional instruction.
 
 Nothing on that screen was invented. Every field, every label, every structure came from a sticky note or a pictogram.
+
+![CookWithUs WebApp](./images/CookWithUsWebApp.jpg)
 
 ---
 
@@ -251,7 +249,7 @@ Nothing on that screen was invented. Every field, every label, every structure c
 
 Looking back across all three prototypes, the same concept travelled a long way:
 
-What began as a pictogram labelled "Recipe" in the Domain Story became a structured node in the Visual Glossary with Ingredients, Making, and Steps. EventStorming renamed `Making` to `HowTo`, added `Title`, `Servings`, `Meal`, `Diet`, and `ShoppingList`, and established the uniqueness constraint on `Title`. The OpenAPI spec encoded all of this as typed schemas with constraints. The React frontend rendered it as labelled form fields and tagged badges.
+What began as a pictogram labelled "Recipe" in the Domain Story became a structured node in the Visual Glossary with Ingredients, HowTo, and Steps. The refined Visual Glossary renamed `Making` to `HowTo`, and added `Title`, `Servings`, `Meal`, `Diet`, and `ShoppingList`, and established the uniqueness constraint on `Title`. The OpenAPI spec encoded all of this as typed schemas with constraints. The React frontend rendered it as labelled form fields and tagged badges.
 
 The language grew more precise at each step — and that precision is exactly what the LLM consumed. Where the language was vague (the self-rating rule, the Meal-Recipe relationship), the LLM produced vague or incorrect output. Where the language was precise (the Ingredient structure, the Step sequence), the output was correct from the first prototype.
 
@@ -285,15 +283,15 @@ The question worth asking is not "how do we use AI to go faster?" It is "how do 
 
 ---
 
-*All artifacts, prompts, OpenAPI specs, and generated code from this post are available at [GitHub link].*
+*All artifacts, prompts, OpenAPI specs, and generated code from this post are available at [GitHub](https://github.com/Grinseteddy/blogpost/tree/main/FromStoriesToCode).*
 
-*The CookWithUs example was modeled using [Miro](https://miro.com) and [Egon.io](https://egon.io). Prototypes were generated using [Claude Code](https://claude.ai/code).*
+*The CookWithUs example was modeled using [Miro](https://miro.com). Prototypes were generated using [Claude Code](https://claude.ai/code).*
 
 ## References
 
 [1] Hofer, S.; Schwentner, H.: Domain Storytelling - A Collaborative, Visual, and Agile Way to Build Domain-Driven Software, Addison-Wesley Professional, 2021
-[2] Brandolini, A.: EventStorming, 2026, accessed February 24th, 2026, [https://www.eventstorming.com/](https://www.eventstorming.com/)
+[2] Brandolini, A.: EventStorming, 2026, accessed February 24th, 2026, https://www.eventstorming.com/
 [3] Evans, E.: Domain-Driven Design - Tackling Complexity in the Heart of Software, Pearson International, 2003
 [4] Zörner, S.: Software-Architekturen dokumentieren und kommunizieren: Entwürfe, Entscheidungen und Lösungen nachvollziehbar und wirkungsvoll festhalten (in German), Hanser Fachbuchverlag, 2015 
-[5] OpenAPI Initiative: OpenAPI Specification 3.1.0, February 15th, 2021, accessed February 24th, 2026, [https://spec.openapis.org/oas/v3.1.0.html](https://spec.openapis.org/oas/v3.1.0.html)
-[6] Garg, R.: When (modular) monolith is the better way to build software, Thoughtworks, June 3rd, 2023, accessed February 24th, 2026 [https://www.thoughtworks.com/en-us/insights/blog/microservices/modular-monolith-better-way-build-software](https://www.thoughtworks.com/en-us/insights/blog/microservices/modular-monolith-better-way-build-software)
+[5] OpenAPI Initiative: OpenAPI Specification 3.1.0, February 15th, 2021, accessed February 24th, 2026, https://spec.openapis.org/oas/v3.1.0.html
+[6] Garg, R.: When (modular) monolith is the better way to build software, Thoughtworks, June 3rd, 2023, accessed February 24th, 2026, https://www.thoughtworks.com/en-us/insights/blog/microservices/modular-monolith-better-way-build-software
