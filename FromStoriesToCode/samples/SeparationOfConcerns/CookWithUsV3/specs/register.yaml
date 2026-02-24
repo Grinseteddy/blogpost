@@ -1,0 +1,112 @@
+openapi: 3.1.0
+info:
+  title: CookWithUs – Register
+  version: 2.0.0
+  description: Register bounded context – Cook registration and lookup.
+
+servers:
+  - url: /api/v2
+
+components:
+  schemas:
+
+    CookCreate:
+      type: object
+      required: [name, givenName, email]
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        givenName:
+          type: string
+        email:
+          type: string
+          format: email
+
+    Cook:
+      type: object
+      required: [id, name, givenName, email]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        givenName:
+          type: string
+        email:
+          type: string
+          format: email
+
+    Error:
+      type: object
+      required: [message]
+      properties:
+        message:
+          type: string
+
+paths:
+
+  /cooks:
+    post:
+      operationId: registerCook
+      summary: Register a new Cook
+      tags: [Cooks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CookCreate'
+      responses:
+        '201':
+          description: Cook registered.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cook'
+        '400':
+          description: Validation error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      operationId: listCooks
+      summary: List all Cooks
+      tags: [Cooks]
+      responses:
+        '200':
+          description: List of Cooks.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cook'
+
+  /cooks/{cookId}:
+    parameters:
+      - name: cookId
+        in: path
+        required: true
+        schema:
+          type: string
+
+    get:
+      operationId: getCook
+      summary: Get a Cook by ID
+      tags: [Cooks]
+      responses:
+        '200':
+          description: Cook found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cook'
+        '404':
+          description: Cook not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'

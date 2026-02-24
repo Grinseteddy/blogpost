@@ -221,13 +221,13 @@ One more structural change worth noting: `RatedRecipe` disappeared. In v1, the L
 
 With v2 producing a clean, well-structured spec, the natural next step was to let the EventStorming board drive the architecture explicitly. Three bounded contexts on the board became three independent OpenAPI specs:
 
-- `register.yaml` — owns Cook identity, registration and lookup, no dependencies
-- `sharing.yaml` — owns the full Recipe structure, depends on Cook only via `X-Cook-Id` header
-- `rating.yaml` — owns Ratings, references Recipe only via `recipeId` in the path
+- [`register.yaml`](https://github.com/Grinseteddy/blogpost/blob/main/FromStoriesToCode/samples/register.yaml) — owns Cook identity, registration and lookup, no dependencies
+- [`sharing.yaml`](https://github.com/Grinseteddy/blogpost/blob/main/FromStoriesToCode/samples/sharing.yaml) — owns the full Recipe structure, depends on Cook only via `X-Cook-Id` header
+- [`rating.yaml`](https://github.com/Grinseteddy/blogpost/blob/main/FromStoriesToCode/samples/rating.yaml) — owns Ratings, references Recipe only via `recipeId` in the path
 
-This separation makes an architectural point that goes beyond prototyping: bounded contexts share IDs, not schemas. `sharing.yaml` does not import `Cook` from `register.yaml`. `rating.yaml` does not import `Recipe` from `sharing.yaml`. The contexts are decoupled at the contract level, which means they can evolve independently.
+This separation makes an architectural point that goes beyond prototyping: bounded contexts share IDs, not schemas. `sharing.yaml` does not import `Cook` from `register.yaml`. `rating.yaml` does not import `Recipe` from `sharing.yaml`. The contexts are loosely coupled at the contract level, which means they can evolve independently.
 
-We kept the implementation as a monorepo with three Express routers, each validated against its own spec. This is worth stating explicitly: **the bounded context is an architectural boundary, not necessarily a deployment boundary**. EventStorming tells you where the seams are. How you deploy across those seams is a separate decision that should be driven by operational needs, not by a reflexive mapping of context to microservice.
+We kept the implementation as a monorepo with three Express routers, each validated against its own spec. This is worth stating explicitly: **the bounded context is an architectural boundary, not necessarily a deployment boundary** [6]. EventStorming tells you where the boundaries are. How you deploy across those seams is a separate decision that should be driven by operational needs, not by a reflexive mapping of context to microservice.
 
 ### The Specs as the Deliverable
 
@@ -296,3 +296,4 @@ The question worth asking is not "how do we use AI to go faster?" It is "how do 
 [3] Evans, E.: Domain-Driven Design - Tackling Complexity in the Heart of Software, Pearson International, 2003
 [4] Zörner, S.: Software-Architekturen dokumentieren und kommunizieren: Entwürfe, Entscheidungen und Lösungen nachvollziehbar und wirkungsvoll festhalten (in German), Hanser Fachbuchverlag, 2015 
 [5] OpenAPI Initiative: OpenAPI Specification 3.1.0, February 15th, 2021, accessed February 24th, 2026, [https://spec.openapis.org/oas/v3.1.0.html](https://spec.openapis.org/oas/v3.1.0.html)
+[6] Garg, R.: When (modular) monolith is the better way to build software, Thoughtworks, June 3rd, 2023, accessed February 24th, 2026 [https://www.thoughtworks.com/en-us/insights/blog/microservices/modular-monolith-better-way-build-software](https://www.thoughtworks.com/en-us/insights/blog/microservices/modular-monolith-better-way-build-software)

@@ -1,0 +1,170 @@
+openapi: 3.1.0
+info:
+  title: CookWithUs – Rating
+  version: 2.0.0
+  description: Rating bounded context – Rating recipes.
+
+servers:
+  - url: /api/v2
+
+components:
+
+  parameters:
+    XCookId:
+      name: X-Cook-Id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: ID of the Cook performing the action.
+
+  schemas:
+
+    RatingCreate:
+      type: object
+      required: [stars]
+      additionalProperties: false
+      properties:
+        stars:
+          type: integer
+          minimum: 1
+          maximum: 5
+        picture:
+          type: string
+          description: Base64-encoded image. Optional.
+        note:
+          type: string
+          maxLength: 1024
+
+    Rating:
+      type: object
+      required: [id, raterId, recipeId, stars]
+      properties:
+        id:
+          type: string
+        raterId:
+          type: string
+        recipeId:
+          type: string
+        stars:
+          type: integer
+          minimum: 1
+          maximum: 5
+        picture:
+          type: string
+          description: Base64-encoded image. Optional.
+        note:
+          type: string
+          maxLength: 1024
+
+    Error:
+      type: object
+      required: [message]
+      properties:
+        message:
+          type: string
+
+paths:
+
+  /recipes/{recipeId}/ratings:
+    parameters:
+      - name: recipeId
+        in: path
+        required: true
+        schema:
+          type: string
+
+    post:
+      operationId: rateRecipe
+      summary: Rate a Recipe
+      tags: [Ratings]
+      parameters:
+        - $ref: '#/components/parameters/XCookId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RatingCreate'
+      responses:
+        '201':
+          description: Rating created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rating'
+        '400':
+          description: Validation error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Missing or unknown X-Cook-Id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Cook cannot rate their own Recipe.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Recipe not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      operationId: listRatings
+      summary: List all Ratings for a Recipe
+      tags: [Ratings]
+      responses:
+        '200':
+          description: List of Ratings.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rating'
+        '404':
+          description: Recipe not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /recipes/{recipeId}/ratings/{ratingId}:
+    parameters:
+      - name: recipeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: ratingId
+        in: path
+        required: true
+        schema:
+          type: string
+
+    get:
+      operationId: getRating
+      summary: Get a specific Rating
+      tags: [Ratings]
+      responses:
+        '200':
+          description: Rating found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rating'
+        '404':
+          description: Recipe or Rating not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
