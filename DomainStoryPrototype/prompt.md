@@ -1,0 +1,1 @@
+Create a clickable webapp prototype out of a provided Domain Story for the process and a Visual Glossary for the domain language. For formatting use the provided screenshot.
