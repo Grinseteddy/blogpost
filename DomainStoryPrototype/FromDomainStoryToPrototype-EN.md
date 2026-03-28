@@ -2,7 +2,7 @@
 
 ## Specification-driven Prototyping in DDD Workshops
 
-You've just run a great Domain Storytelling workshop. The Miro board is covered in pictograms, numbered arrows, and work objects — stickies everywhere, connections between everything, the whole wall alive with the domain's logic. One frame holds the Domain Story, actors moving through a sequence of activities. Another frame holds the Visual Glossary, sticky notes mapping out the terms and relationships the domain experts actually use. Everyone nodded. The right questions were asked. The session was a success.
+You've just run a great Domain Storytelling workshop. The Miro board is covered in pictograms, numbered arrows, and work objects — stickies everywhere, connections between everything or a whole board alive with the domain's logic. Frames are holding the Domain Story, actors moving through a sequence of activities. Another frame holds the Visual Glossary, sticky notes mapping out the terms and relationships the domain experts actually use. Everyone nodded. The right questions were asked. The session was a success.
 
 Then Monday arrives. The Miro board gets a bookmark. The export lands in a shared folder. And nothing has changed.
 
@@ -95,9 +95,13 @@ The method is simpler than you might expect. You need three things:
 
 Hand all three to an AI and use this prompt:
 
-> *"Create a clickable prototype out of a provided Domain Story for the process and a Visual Glossary for the domain language. For formatting use the provided screenshot."*
+> *"Create a clickable webapp prototype out of a provided Domain Story for the process and a Visual Glossary for the domain language. For formatting use the provided screenshot."*
 
 That's it. The Domain Story tells the AI what screens to build and in what order. The Visual Glossary tells it what to call everything. The example page tells it how to make it look. There is nothing left to specify — because the workshop already did the work.
+
+![Bild: Beispiel für einen KI-erzeugten Prototypen](./images/Prototype.jpg)
+
+10 minutes later we had a running [prototype](https://github.com/Grinseteddy/blogpost/blob/main/DomainStoryPrototype/samples/velopass_webapp_prototype.html).
 
 ---
 
@@ -105,14 +109,14 @@ That's it. The Domain Story tells the AI what screens to build and in what order
 
 There is something that happens when domain experts see their vocabulary in a working interface. They stop being narrators and start being critics — in the best sense of the word.
 
-A Domain Story asks: *what do you do?* A prototype asks: *is this what you meant?* These are different questions, and they surface different information. The first elicits description. The second elicits correction.
+A Domain Story asks: *what do you want to do?* A prototype asks: *is this what you meant?* These are different questions, and they surface different information. The first elicits description. The second elicits correction.
 
 The gaps, edge cases, and unstated assumptions that did not surface in the workshop will surface in five minutes of clicking through a prototype. Not because the experts were holding back — but because software makes implicit knowledge visible in a way that conversation and diagrams cannot.
 
-Domain Storytelling already gives you all the raw material. The Visual Glossary is a translation layer that was sitting there all along. What we did that day has a name: specification-driven prototyping. The Domain Story and the Visual Glossary aren't just workshop outputs — they are the specification. And with an AI to do the rendering, it happens fast enough to build the prototype during the workshop itself — not days later.
+Domain Storytelling already gives you all the raw material. The Visual Glossary gives you the terms and relations. We did specification-driven prototyping just in the workshop. The Domain Story and the Visual Glossary aren't just workshop outputs — they are the specification. And with an AI to do the rendering, it happens fast enough to build the prototype during the workshop itself — not days later.
 
-A prototype built from the Domain Story and the Visual Glossary isn't a deliverable — it's a question, asked in the only language that always gets an honest answer.
+A prototype built from the Domain Story and the Visual Glossary isn't a deliverable — it's a question, asked in a language that gets an honest answer.
 
 ---
 
-*Have you used Domain Storytelling in your projects? I'd love to hear how you bridge the gap from workshop to validation — feel free to reach out or share your experience in the comments.*
+*Have you used Domain Storytelling in your projects? I'd love to hear how you bridge the gap from workshop to validation — feel free to reach out or share your experience.*

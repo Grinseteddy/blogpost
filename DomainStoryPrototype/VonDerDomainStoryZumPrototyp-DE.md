@@ -2,7 +2,7 @@
 
 ## Specification-driven Prototyping in DDD Workshops
 
-Gerade haben Sie einen erfolgreichen Domain-Storytelling-Workshop durchgeführt. Das Miro-Board ist übersät mit Piktogrammen, nummerierten Pfeilen und Arbeitsobjekten — überall Stickies, alles miteinander verbunden, die gesamte Wand lebt von der Logik der Domäne. In einem Frame steckt die Domain Story, Akteure bewegen sich durch eine Abfolge von Aktivitäten. In einem anderen Frame steckt das Visual Glossary, Sticky Notes, die die Begriffe und Beziehungen festhalten, die die Domänenexperten tatsächlich verwenden. Alle haben genickt. Die richtigen Fragen wurden gestellt. Die Session war ein Erfolg.
+Gerade haben Sie einen erfolgreichen Domain-Storytelling-Workshop durchgeführt. Das Miro-Board ist übersät mit Piktogrammen, nummerierten Pfeilen und Arbeitsobjekten — überall Stickies, alles miteinander verbunden, das gesamte Board lebt von der Logik der Domäne. In den Frames stecken die Domain Stories, Akteure bewegen sich durch eine Abfolge von Aktivitäten. In einem anderen Frame steckt das Visual Glossary, Sticky Notes, die die Begriffe und Beziehungen festhalten, die die Domänenexperten tatsächlich verwenden. Alle haben genickt. Die richtigen Fragen wurden gestellt. Die Session war ein Erfolg.
 
 Dann kommt der Montag. Der Link zum Miro-Board wird gespeichert. Der Export landet in einem freigegebenen Ordner. Und nichts hat sich verändert.
 
@@ -49,17 +49,24 @@ Vor einigen Monaten habe ich einen Domain-Storytelling-Workshop mit einem Team d
 
 Die Domain Story hielt zehn nummerierte Aktivitäten über zwei Akteure fest. Ein Mechaniker bringt ein Fahrrad zu einem Fahrradständer. Ein Pendler registriert sich in der App, zahlt einen Monatsbeitrag, sucht nach einem Fahrrad an einer Haltestelle des öffentlichen Nahverkehrs, bucht es über die App, erhält einen Code und entsperrt das Fahrrad mit diesem Code am Fahrradständer. Dann fährt der Pendler nach Hause, gibt das Fahrrad an einem Fahrradständer in der Nähe seines Zuhauses zurück und bestätigt die Rückgabe per Code.
 
-*[Bild: Domain Story — die Domain Story des Fahrradverleihsystems aus Miro, mit der vollständigen Abfolge von zehn Aktivitäten über die Akteure Mechaniker und Pendler]*
+*![Bild: Domain Story — die Domain Story des Fahrradverleihsystems aus Miro, mit der vollständigen Abfolge von zehn Aktivitäten über die Akteure Mechaniker und Pendler](./images/DomainStory.jpg)*
 
 Parallel dazu entstand das Visual Glossary neben der Story und hielt sechs Begriffe und die Beziehungen zwischen ihnen fest: Ein Pendler *verwendet* einen Code, ein Code *entsperrt* ein Schloss, ein Fahrradständer *enthält* Schlösser, ein Fahrradständer *speichert* Fahrräder, und ein Pendler *zahlt* einen Monatsbeitrag. Die Bedeutung jedes Begriffs ergab sich aus diesen Beziehungen, nicht aus Beschreibungen.
 
-*[Bild: Visual Glossary — das Miro-Sticky-Note-Diagramm mit Pendler, Fahrrad, Fahrradständer, Schloss, Code und Monatsbeitrag sowie den Beziehungen zwischen ihnen]*
+*![Bild: Visual Glossary — das Miro-Sticky-Note-Diagramm mit Pendler, Fahrrad, Fahrradständer, Schloss, Code und Monatsbeitrag sowie den Beziehungen zwischen ihnen](./images/VIsualGlossary.jpg)*
 
-Am Ende der Session nahm ich beide Artefakte — die Domain Story und das Visual Glossary — und übergab sie einer KI, zusammen mit einer Beispiel-Webseite, um den visuellen Stil und die Formatierung zu definieren. Und ließ sie einen funktionierenden Prototypen bauen.
+Am Ende der Session nahm ich beide Artefakte — die Domain Story und das Visual Glossary — und übergab sie einer KI, zusammen mit einer Beispiel-Webseite, um den visuellen Stil und die Formatierung zu definieren. Und forderte sie auf einen funktionierenden Prototypen zu bauen.
 
-*[Bild: Beispiel-Webseite — der Screenshot, der zur Definition des visuellen Stils und der Formatierung des Prototypen verwendet wurde]*
+> *"Create a clickable webapp prototype out of a provided Domain Story for the process and a Visual Glossary for the domain language. For formatting use the provided screenshot."*
 
-Zehn Minuten später hatten wir einen lauffähigen HTML-Prototypen. Die Screens folgten direkt aus der Domain Story — einer zum Finden eines verfügbaren Fahrrads an einem Fahrradständer, einer zum Buchen und Erhalten eines Codes, einer für die aktive Fahrt, einer für die Rückgabe des Fahrrads. Die Story hatte die Navigation für uns gezeichnet.
+*![Bild: Beispiel-Webseite — der Screenshot, der zur Definition des visuellen Stils und der Formatierung des Prototypen verwendet wurde](./images/screenshot.jpg)*
+
+Zehn Minuten später hatten wir einen lauffähigen [HTML-Prototypen](https://github.com/Grinseteddy/blogpost/blob/main/DomainStoryPrototype/samples/velopass_webapp_prototype.html).
+
+![Bild: Screenshot einer funktionierenden Webanwendung]
+
+
+Die Screens folgten direkt aus der Domain Story — einer zum Finden eines verfügbaren Fahrrads an einem Fahrradständer, einer zum Buchen und Erhalten eines Codes, einer für die aktive Fahrt, einer für die Rückgabe des Fahrrads. Die Story hatte die Navigation für uns gezeichnet.
 
 Jede Beschriftung, jeder Feldname und jede Schaltfläche verwendete das genaue Vokabular aus dem Glossary. Nicht „Fahrzeug" — *Fahrrad*. Nicht „Station" — *Fahrradständer*. Nicht „PIN" — *Code*. Nicht „Fahrt beenden" — *Fahrrad zurückgeben*. Eigene Begriffe musste die KI nicht erfinden — sie hatte das Glossary direkt vor sich.
 
@@ -105,14 +112,14 @@ Das war's. Die Domain Story teilt der KI mit, welche Screens in welcher Reihenfo
 
 Es passiert etwas, wenn Domänenexperten ihr Vokabular in einer funktionierenden Benutzeroberfläche sehen. Sie hören auf, Erzähler zu sein, und werden zu Kritikern — im besten Sinne des Wortes.
 
-Eine Domain Story fragt: *Was tust du?* Ein Prototyp fragt: *Ist das so gemeint?* Das sind verschiedene Fragen, und sie bringen verschiedene Informationen ans Licht. Die erste lädt zur Beschreibung ein. Die zweite lädt zur Korrektur ein.
+Eine Domain Story fragt: *Was möchtest du tun?* Ein Prototyp fragt: *Ist das so gemeint?* Das sind verschiedene Fragen, und sie bringen verschiedene Informationen ans Licht. Die erste lädt zur Beschreibung ein. Die zweite lädt zur Korrektur ein.
 
-Die Lücken, Sonderfälle und unausgesprochenen Annahmen, die im Workshop nicht aufgetaucht sind, tauchen in fünf Minuten auf, wenn man durch einen Prototypen klickt. Nicht weil die Experten etwas zurückgehalten hätten — sondern weil Software implizites Wissen auf eine Weise sichtbar macht, wie es Gespräche und Diagramme nicht können.
+Die Lücken, Sonderfälle und unausgesprochenen Annahmen, die im Workshop nicht aufgetaucht sind, tauchen in fünf Minuten auf, wenn man durch einen Prototyp klickt. Nicht weil die Experten etwas zurückgehalten hätten — sondern weil Software implizites Wissen auf eine Weise sichtbar macht, wie es Gespräche und Diagramme nicht können.
 
-Domain Storytelling liefert bereits das gesamte Rohmaterial. Das Visual Glossary ist eine Übersetzungsschicht, die die ganze Zeit schon da war. Was wir an jenem Tag getan haben, hat einen Namen: Specification-driven Prototyping. Die Domain Story und das Visual Glossary sind nicht nur Workshop-Outputs — sie sind die Spezifikation. Und mit einer KI, die das Rendering übernimmt, geht es so schnell, dass der Prototyp noch im Workshop entsteht — und nicht erst Tage später.
+Domain Storytelling liefert bereits das gesamte Rohmaterial. Das Visual Glossary gibt dir die Begriffe und ihre Beziehungen. Wir haben eine spezifikations-getriebenen Prototypen erzeugt. Die Domain Story und das Visual Glossary sind nicht nur Workshop-Outputs — sie sind die Spezifikation. Und mit einer KI, die das Rendering übernimmt, geht es so schnell, dass der Prototyp noch im Workshop entsteht — und nicht erst Tage später.
 
-Ein Prototyp, der aus der Domain Story und dem Visual Glossary gebaut wird, ist kein Lieferobjekt — er ist eine Frage, gestellt in der einzigen Sprache, die immer eine ehrliche Antwort bekommt.
+Ein Prototyp, der aus der Domain Story und dem Visual Glossary gebaut wird, ist kein Lieferobjekt — er ist eine Frage, gestellt in einer Sprache, die eine ehrliche Antwort bekommt.
 
 ---
 
-*Setzen Sie Domain Storytelling in Ihren Projekten ein? Ich freue mich darauf zu hören, wie Sie die Lücke zwischen Workshop und Validierung schließen — schreiben Sie gerne einen Kommentar oder melden Sie sich direkt.*
+*Setzen Sie Domain Storytelling in Ihren Projekten ein? Ich freue mich darauf zu hören, wie Sie die Lücke zwischen Workshop und Validierung schließen — melden Sie sich.*
