@@ -1,8 +1,6 @@
 # From Domain Story to Prototype
 
-## Specification-driven Prototyping in DDD Workshops
-
-You've just run a great Domain Storytelling workshop. The Miro board is covered in pictograms, numbered arrows, and work objects — stickies everywhere, connections between everything or a whole board alive with the domain's logic. Frames are holding the Domain Story, actors moving through a sequence of activities. Another frame holds the Visual Glossary, sticky notes mapping out the terms and relationships the domain experts actually use. Everyone nodded. The right questions were asked. The session was a success.
+You've just run a great Domain Storytelling workshop. The Miro board is covered in pictograms, numbered arrows, and work objects — stickies everywhere, connections between everything, the whole board alive with the domain's logic. Frames hold the Domain Stories, actors moving through a sequence of activities. Another frame holds the Visual Glossary, sticky notes mapping out the terms and relationships the domain experts actually use. Everyone nodded. The right questions were asked. The session was a success.
 
 Then Monday arrives. The Miro board gets a bookmark. The export lands in a shared folder. And nothing has changed.
 
@@ -12,7 +10,7 @@ This is the classic gap between discovery and delivery. Domain Storytelling help
 
 ## Domain Storytelling in a nutshell
 
-If you're new to the method: Domain Storytelling is a collaborative modelling technique where domain experts narrate how their work actually happens or should happen, while a moderator captures the story using a simple visual language. The result is a Domain Story: a diagram showing who does what with which objects — in a clear, numbered sequence.
+If you're new to the method, Domain Storytelling is a collaborative modelling technique where domain experts narrate how their work actually happens or should happen, while a moderator captures the story using a simple visual language. The result is a Domain Story: a diagram showing who does what with which objects — in a clear, numbered sequence.
 
 The cast of every Domain Story consists of three types of elements:
 
@@ -20,7 +18,7 @@ The cast of every Domain Story consists of three types of elements:
 - **Work objects** — the things being worked with (e.g. *bicycle*, *code*, *monthly fee*)
 - **Activities** — what actors do with or to those objects (e.g. *books*, *unlocks*, *returns*)
 
-In parallel, a **Visual Glossary** takes shape. It doesn't define terms in isolation — instead, it captures how concepts relate to each other through strong verbs: a commuter *uses* a code, a code *unlocks* a lock, a rack *contains* locks, a rack *stores* bicycles. The meaning of each term emerges from these relationships, not from a dictionary entry. By the end of the session you have two complementary artefacts: a story that shows the flow, and a glossary that explains the vocabulary.
+In parallel, a **Visual Glossary** takes shape. It doesn't define terms in isolation — instead, it captures how concepts relate to each other through strong verbs: a commuter *uses* a code, a code *unlocks* a lock, a rack *contains* locks, a rack *stores* bicycles. The meaning of each term emerges from these relationships, not from a dictionary entry. By the end of the session, you have two complementary artefacts: a story that shows the flow, and a glossary that explains the vocabulary.
 
 Most teams treat the glossary as a reference artefact — nice to have, but nothing more. This post argues that with both artefacts in hand, you already have everything you need to build a working prototype — and show it back to the domain experts before the session ends.
 
@@ -45,25 +43,25 @@ The prototype doesn't need to be complete. It doesn't need a database, error han
 
 ## A real example: the bike-sharing system
 
-A few months ago I ran a Domain Storytelling workshop with a team building a bike-sharing system for urban commuters. The goal was to understand how the system would work in practice — from a mechanic provisioning bikes all the way to a commuter unlocking one at a public transport station and returning it near home.
+A few days ago, I ran a Domain Storytelling workshop with a team building a bike-sharing system for urban commuters. The goal was to understand how the system would work in practice, from a mechanic provisioning bikes all the way to a commuter unlocking one at a public transport station and returning it near home.
 
 The Domain Story captured ten numbered activities across two actors. A mechanic brings a bicycle to a rack. A commuter registers in the app, pays a monthly fee, searches for a bicycle at a public transport station, books it via the app, receives a code, and unlocks the bicycle with that code at the rack. Then the commuter drives home, returns the bicycle to a rack near home, and confirms the return via code.
 
-*[Picture: Domain Story — the bike-sharing domain story from Miro, showing the full sequence of ten activities across the Mechanic and Commuter actors]*
+![Picture: Domain Story — the bike-sharing domain story from Miro, illustrating the full sequence of ten activities across the Mechanic and Commuter actors](https://eu-central-1.graphassets.com/AiE4QoWSSiIQO3k152ugkz/cmna9n53jjhjp08t8f802zn4a)
 
 In parallel, the Visual Glossary took shape alongside the story, capturing six terms and the relationships between them: a commuter *uses* a code, a code *unlocks* a lock, a rack *contains* locks, a rack *stores* bicycles, and a commuter *pays* a monthly fee. The meaning of each term came from those relationships, not from descriptions.
 
-*[Picture: Visual Glossary — the Miro sticky-note diagram showing the Commuter, Bicycle, Rack, Lock, Code, and Monthly Fee and the relationships between them]*
+![Picture: Visual Glossary — the Miro sticky-note diagram showing the Commuter, Bicycle, Rack, Lock, Code, and Monthly Fee and the relationships between them](https://eu-central-1.graphassets.com/AiE4QoWSSiIQO3k152ugkz/cmna9nslzjhr608t8necjor4a)
 
-At the end of the session, I took both artefacts — the Domain Story and the Visual Glossary — and handed them to an AI, together with an example web page to define the visual style and formatting. And had it build a working prototype.
+At the end of the session, I took both artefacts — the Domain Story and the Visual Glossary — and handed them to an AI, together with an example web page to define the visual style and formatting. And had it built a working prototype.
 
-*[Picture: Example web page — the screenshot used to define the visual style and formatting for the prototype]*
+![Picture: Example web page — the screenshot used to define the visual style and formatting for the prototype](https://eu-central-1.graphassets.com/AiE4QoWSSiIQO3k152ugkz/cmna9z6znjoe608t84eh8no0g)
 
-Ten minutes later, we had a running HTML prototype. The screens followed directly from the Domain Story — one for finding an available bicycle at a rack, one for booking and receiving a code, one showing the active ride, one for returning the bicycle. The story had drawn the navigation for us.
+Ten minutes later, we had a running [HTML prototype](https://github.com/Grinseteddy/blogpost/blob/main/DomainStoryPrototype/samples/velopass_webapp_prototype.html). The screens followed directly from the Domain Story — one for finding an available bicycle at a rack, one for booking and receiving a code, one showing the active ride, and one for returning the bicycle. The story had drawn the navigation for us.
 
 Every label, every field name, and every button used the exact vocabulary from the glossary. Not "vehicle" — *bicycle*. Not "station" — *rack*. Not "PIN" — *code*. Not "end trip" — *return bicycle*. The AI had no reason to invent its own terminology — the glossary was right there.
 
-*[Picture: Prototype screenshot — the resulting HTML prototype showing one or more screens with the domain vocabulary clearly visible]*
+![Picture: Prototype screenshot — the resulting HTML prototype showing one or more screens with the domain vocabulary clearly visible]](https://eu-central-1.graphassets.com/AiE4QoWSSiIQO3k152ugkz/cmnaa14ixi8b806uprsfuf78j)
 
 I showed this back to the team before the workshop ended.
 
@@ -79,7 +77,7 @@ Another participant looked at the Return screen and said: "The commuter confirms
 
 A developer asked: "Is a code single-use? Can I unlock, re-lock, and unlock again on the same ride?" A question that turned out to have a genuine business rule behind it — and one that would have caused a subtle bug if left unresolved.
 
-Questions like these also surface in the Domain Storytelling workshop itself. But the prototype activates a different mode of thinking — that of the user rather than the narrator. And that's what brings the additional insights to light.
+Questions like these also surface during the Domain Storytelling workshop. But the prototype activates a different mode of thinking — that of the user rather than the narrator. And that's what brings the additional insights to light.
 
 The key advantage is the AI: the prototype is ready while the workshop is still running — not one or two weeks later, when the energy has long faded.
 
@@ -95,25 +93,21 @@ The method is simpler than you might expect. You need three things:
 
 Hand all three to an AI and use this prompt:
 
-> *"Create a clickable webapp prototype out of a provided Domain Story for the process and a Visual Glossary for the domain language. For formatting use the provided screenshot."*
+> *"Create a clickable webapp prototype out of a provided Domain Story for the process and a Visual Glossary for the domain language. For formatting, use the provided screenshot."*
 
 That's it. The Domain Story tells the AI what screens to build and in what order. The Visual Glossary tells it what to call everything. The example page tells it how to make it look. There is nothing left to specify — because the workshop already did the work.
 
-![Bild: Beispiel für einen KI-erzeugten Prototypen](./images/Prototype.jpg)
-
-10 minutes later we had a running [prototype](https://github.com/Grinseteddy/blogpost/blob/main/DomainStoryPrototype/samples/velopass_webapp_prototype.html).
-
 ---
 
-## Why this changes the conversation
+## Why does this change the conversation
 
-There is something that happens when domain experts see their vocabulary in a working interface. They stop being narrators and start being critics — in the best sense of the word.
+Something happens when domain experts see their vocabulary in a working interface. They stop being narrators and start being critics — in the best sense of the word.
 
-A Domain Story asks: *what do you want to do?* A prototype asks: *is this what you meant?* These are different questions, and they surface different information. The first elicits description. The second elicits correction.
+A Domain Story asks: *What do you want to do?* A prototype asks: *Is this what you meant?* These are different questions, and they surface different information. The first elicits description. The second elicits correction.
 
 The gaps, edge cases, and unstated assumptions that did not surface in the workshop will surface in five minutes of clicking through a prototype. Not because the experts were holding back — but because software makes implicit knowledge visible in a way that conversation and diagrams cannot.
 
-Domain Storytelling already gives you all the raw material. The Visual Glossary gives you the terms and relations. We did specification-driven prototyping just in the workshop. The Domain Story and the Visual Glossary aren't just workshop outputs — they are the specification. And with an AI to do the rendering, it happens fast enough to build the prototype during the workshop itself — not days later.
+Domain Storytelling already gives you all the raw material. The Visual Glossary provides the terms and their relationships. The Domain Story and the Visual Glossary aren't just workshop outputs — they are the specification. And the prototype follows directly from them. With an AI to do the rendering, it happens fast enough to build the prototype during the workshop itself — not days later.
 
 A prototype built from the Domain Story and the Visual Glossary isn't a deliverable — it's a question, asked in a language that gets an honest answer.
 
